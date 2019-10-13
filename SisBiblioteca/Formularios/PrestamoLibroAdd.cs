@@ -4,6 +4,8 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Net;
+using System.Net.Mail;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -79,6 +81,34 @@ namespace SisBiblioteca.Formularios
             {
                 conteoAlumnosConMora(int.Parse(lblIdAlumno.Text));
             }
+
+            System.Net.Mail.MailMessage msg = new System.Net.Mail.MailMessage();
+            msg.To.Add("csalazarvar@gmail.com");
+            msg.Subject = "Solicitud de prestamo desde ARIA App";
+            msg.SubjectEncoding = System.Text.Encoding.UTF8;
+            msg.Body = "Solicitud de prestamo desde ARIA App";
+            msg.BodyEncoding = System.Text.Encoding.UTF8;
+            msg.IsBodyHtml = true;
+            msg.From = new System.Net.Mail.MailAddress("csalazarvar@gmail.com");
+
+            SmtpClient cliente = new SmtpClient();
+            cliente.Credentials = new System.Net.NetworkCredential("csalazarvar@gmail.com", "kaiser1945");
+            cliente.Port = 587;
+            cliente.EnableSsl = true;
+            cliente.Host = "csalazarvar@gmail.com";
+
+            try
+            {
+                cliente.Send(msg);
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Error al enviar...");
+            }
+
+        
+
+
         }
 
         private void mcalFechaLimite_DateChanged(object sender, DateRangeEventArgs e)
